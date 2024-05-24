@@ -20,6 +20,7 @@ COPY Gemfile Gemfile.lock ./
 # Copy the rest of the application code
 RUN yarn install
 COPY . .
+COPY ./vendor/* ./vendor
 
 # Install gems
 RUN bundle install
