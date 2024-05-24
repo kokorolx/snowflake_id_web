@@ -36,5 +36,5 @@ EXPOSE 3000
 
 RUN gem install foreman
 # Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD ["foreman", "start", "-f", "Procfile.dev"]
