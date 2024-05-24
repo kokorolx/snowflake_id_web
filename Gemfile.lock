@@ -1,3 +1,8 @@
+PATH
+  remote: vendor/snowflake_id_generator
+  specs:
+    snowflake_id_generator (1.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -115,6 +120,8 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
+    nokogiri (1.16.5-aarch64-linux)
+      racc (~> 1.4)
     nokogiri (1.16.5-arm64-darwin)
       racc (~> 1.4)
     pg (1.5.6)
@@ -160,7 +167,6 @@ GEM
     redis (4.8.1)
     reline (0.5.7)
       io-console (~> 0.5)
-    snowflake_id_generator (1.3)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -190,6 +196,7 @@ GEM
     zeitwerk (2.6.14)
 
 PLATFORMS
+  aarch64-linux
   arm64-darwin-22
 
 DEPENDENCIES
@@ -202,7 +209,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.8)
   redis (~> 4.0)
-  snowflake_id_generator
+  snowflake_id_generator!
   sprockets-rails
   stimulus-rails
   turbo-rails

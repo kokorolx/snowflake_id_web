@@ -1,0 +1,28 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Masters</h1>
+
+<div id="master_ids" class="overflow-x-auto rounded-md shadow-md bg-gray-200">
+  <table class="w-full min-w-full table-auto divide-y divide-gray-200">
+    <thead>
+      <tr class="bg-gray-500 text-left text-xs font-semibold text-white">
+        <th class="px-6 py-3">snowflake_id</th>
+        <th class="px-6 py-3">snowflake_data</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @master_ids.each do |master_id| %>
+        <tr>
+          <td class="px-6 py-4">
+            <%= master_id.snowflake_id %>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <%= master_id.snowflake_data %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to "New master", new_master_id_path, class: "inline-flex items-center px-4 py-2 text-xs font-semibold leading-tight text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>

@@ -67,4 +67,4 @@ group :development do
   # gem "spring"
 end
 
-gem 'snowflake_id_generator'
+gem 'snowflake_id_generator', path: 'vendor/snowflake_id_generator'
