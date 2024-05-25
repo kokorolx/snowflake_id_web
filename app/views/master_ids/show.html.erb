@@ -3,6 +3,9 @@
   <h1 class="text-white text-3xl font-bold">
     <%= @master_id.snowflake_id %>
   </h1>
+  <h2>
+    FROM: <%= ENV['DATACENTER_NAME'] %>
+  </h2>
 
   <table class="border-collapse table-auto text-sm">
   <thead>

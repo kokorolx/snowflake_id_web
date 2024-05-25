@@ -1,5 +1,6 @@
-PATH
-  remote: vendor/snowflake_id_generator
+GIT
+  remote: https://github.com/kokorolx/snowflake_id_generator.git
+  revision: 46ef9c092a2bd5dcb157319e07378d0ba749f76d
   specs:
     snowflake_id_generator (1.3)
 

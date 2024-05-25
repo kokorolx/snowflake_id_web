@@ -51,6 +51,9 @@ services:
     ports:
       - "3000:3000"
     deploy:
+      # placement:
+      #   constraints:
+      #     - node.label.DATACENTER_ID_{{ .Node.ID }} == {{ .Node.ID }}
       replicas: 1
       update_config:
         parallelism: 2
@@ -60,11 +63,17 @@ services:
       resources:
         limits:
           cpus: '0.25'
-          memory: 256M
+          memory: 128M
         reservations:
           cpus: '0.1'
-          memory: 128M
-
+          memory: 20M
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      WORKER_ID: "{{.Task.Slot}}"
+      DATACENTER_ID: "{{ .Node.ID }}"
+      DATACENTER_NAME: "{{ .Node.Hostname }}"
 volumes:
   postgres_data:
 
