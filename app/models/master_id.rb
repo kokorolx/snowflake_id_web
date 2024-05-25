@@ -1,6 +1,13 @@
 class MasterId < ApplicationRecord
   before_create :generate_snowflake_id
 
+  def self.count_datacenter_and_worker_ids
+    datacenter_counts = MasterId.group("snowflake_data->>'datacenter_id'").count
+    worker_counts = MasterId.group("snowflake_data->>'worker_id'").count
+
+    { datacenter_counts: datacenter_counts, worker_counts: worker_counts }
+  end
+
   private
   def generate_snowflake_id
     datacenter_id = ENV['DATACENTER_ID'].to_i

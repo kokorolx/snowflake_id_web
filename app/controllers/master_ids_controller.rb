@@ -5,6 +5,9 @@ class MasterIdsController < ApplicationController
   # GET /master_ids or /master_ids.json
   def index
     @master_ids = MasterId.all
+    counts = MasterId.count_datacenter_and_worker_ids
+    @datacenter_counts = counts[:datacenter_counts]
+    @worker_counts = counts[:worker_counts]
   end
 
   # GET /master_ids/1 or /master_ids/1.json
