@@ -1,4 +1,5 @@
 class MasterIdsController < ApplicationController
+  skip_forgery_protection
   before_action :set_master_id, only: %i[ show edit update destroy ]
 
   # GET /master_ids or /master_ids.json
