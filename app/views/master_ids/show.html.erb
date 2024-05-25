@@ -1,10 +1,25 @@
-<p style="color: green"><%= notice %></p>
+<div class="h-screen bg-blue-400 flex flex-col items-center justify-center">
+  <img src="https://upcloud.com/media/Docker-Swarm-Orchestration-2.png" alt="Docker Logo" class="w-50 mx-auto mb-4 rounded-full" />
+  <h1 class="text-white text-3xl font-bold">
+    <%= @master_id.snowflake_id %>
+  </h1>
 
-<%= render @master_id %>
+  <table class="border-collapse table-auto text-sm">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @master_id.snowflake_data.each do |key, value| %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<div>
-  <%= link_to "Edit this master", edit_master_id_path(@master_id) %> |
-  <%= link_to "Back to masters", master_ids_path %>
-
-  <%= button_to "Destroy this master", @master_id, method: :delete %>
+<%= link_to "New master", new_master_id_path, class: "inline-flex items-center mt-5 px-4 py-2 text-xs font-semibold leading-tight text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
 </div>

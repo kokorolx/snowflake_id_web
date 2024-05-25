@@ -11,6 +11,22 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: snowflake_id_development
+    ports:
+      - "5432:5432"
+    deploy:
+      placement:
+        constraints:
+          - node.labels.database == true
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
 
   base: &base
     build: .
@@ -28,9 +44,10 @@ services:
   web:
     <<: *base
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    # command: bash -c "rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"
 
-    # volumes:
-    #   - .:/app
+    volumes:
+      - .:/app
     ports:
       - "3000:3000"
     deploy:

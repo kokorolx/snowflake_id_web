@@ -13,8 +13,16 @@ class MasterIdsController < ApplicationController
 
   # GET /master_ids/new
   def new
-    @master_id = MasterId.create
-    render json: { master_id: @master_id }
+    @master_id = MasterId.new
+    respond_to do |format|
+      if @master_id.save
+        format.html { redirect_to master_id_url(@master_id), notice: "Master was successfully created." }
+        format.json { render :show, status: :created, location: @master_id }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @master_id.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /master_ids/1/edit
