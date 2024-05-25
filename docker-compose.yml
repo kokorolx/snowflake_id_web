@@ -22,7 +22,7 @@ services:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       REPLICA_INDEX: "{{.Task.Slot}}"
-      DATACENTER_ID: "{{.Node.Labels.DATACENTER_ID}}"
+      DATACENTER_ID: ${DATACENTER_ID}
     deploy:
       replicas: 0
   web:

@@ -68,3 +68,5 @@ group :development do
 end
 
 gem 'snowflake_id_generator', git: 'https://github.com/kokorolx/snowflake_id_generator.git'
+gem 'rack-cors', require: 'rack/cors'
+
