@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :master_ids
   resources :master_ids #, only: [:index, :show, :create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

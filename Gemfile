@@ -67,6 +67,6 @@ group :development do
   # gem "spring"
 end
 
-gem 'snowflake_id_generator', git: 'https://github.com/kokorolx/snowflake_id_generator.git'
+gem 'snowflake_id_generator', path: 'vendor/snowflake_id_generator'
 gem 'rack-cors', require: 'rack/cors'
 

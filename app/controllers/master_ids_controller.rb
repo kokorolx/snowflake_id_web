@@ -13,7 +13,8 @@ class MasterIdsController < ApplicationController
 
   # GET /master_ids/new
   def new
-    @master_id = MasterId.new
+    @master_id = MasterId.create
+    render json: { master_id: @master_id }
   end
 
   # GET /master_ids/1/edit
@@ -34,6 +35,7 @@ class MasterIdsController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /master_ids/1 or /master_ids/1.json
   # def update

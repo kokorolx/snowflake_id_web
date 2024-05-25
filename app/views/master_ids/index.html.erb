@@ -2,21 +2,21 @@
 
 <h1>Masters</h1>
 
-<div id="master_ids" class="overflow-x-auto rounded-md shadow-md bg-gray-200">
-  <table class="w-full min-w-full table-auto divide-y divide-gray-200">
+<div id="master_ids">
+  <table class="table-fixed">
     <thead>
-      <tr class="bg-gray-500 text-left text-xs font-semibold text-white">
-        <th class="px-6 py-3">snowflake_id</th>
-        <th class="px-6 py-3">snowflake_data</th>
+      <tr>
+        <th>snowflake_id</th>
+        <th>snowflake_data</th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <tbody>
       <% @master_ids.each do |master_id| %>
         <tr>
-          <td class="px-6 py-4">
+          <td>
             <%= master_id.snowflake_id %>
           </td>
-          <td class="px-6 py-4 text-center">
+          <td>
             <%= master_id.snowflake_data %>
           </td>
         </tr>
