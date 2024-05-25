@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Check if root privileges are required for Docker commands
-# if [[ $(id -u) -ne 0 ]]; then
-#   echo "Please run this script with sudo or as root user."
-#   exit 1
-# fi
+if [[ $(id -u) -ne 0 ]]; then
+  echo "Please run this script with sudo or as root user."
+  exit 1
+fi
 
 # Get a list of all node IDs
 node_ids=$(docker node ls --quiet)
