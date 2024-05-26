@@ -12,7 +12,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install yarn -y
 
 # Set working directory
-WORKDIR /app
+WORKDIR /snowflake
 
 # Copy the Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
@@ -30,11 +30,13 @@ RUN bundle install
 
 # Precompile assets
 RUN bundle exec rake assets:precompile
+COPY . .
 
 # Expose port 3000 to the Docker host
 EXPOSE 3000
 
 RUN gem install foreman
+ENV RAILS_ENV=production
 # Start the Rails server
-# CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD ["foreman", "start", "-f", "Procfile.dev"]

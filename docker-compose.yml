@@ -8,9 +8,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: snowflake_id_development
+      POSTGRES_USER: snowflake
+      POSTGRES_PASSWORD: postgres!supperF@k3
+      POSTGRES_DB: snowflake_id_production
     ports:
       - "5432:5432"
     deploy:
@@ -34,9 +34,10 @@ services:
     depends_on:
       - db
     environment:
+      RAILS_ENV: production
       DATABASE_HOST: db
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: postgres
+      DATABASE_USERNAME: snowflake
+      DATABASE_PASSWORD: postgres!supperF@k3
       WORKER_ID: "{{.Task.Slot}}"
       DATACENTER_ID: ${DATACENTER_ID}
     deploy:
@@ -67,13 +68,6 @@ services:
         reservations:
           cpus: '0.1'
           memory: 20M
-    environment:
-      DATABASE_HOST: db
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: postgres
-      WORKER_ID: "{{.Task.Slot}}"
-      DATACENTER_ID: "{{ .Node.ID }}"
-      DATACENTER_NAME: "{{ .Node.Hostname }}"
 volumes:
   postgres_data:
 

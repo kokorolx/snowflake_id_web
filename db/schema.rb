@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_155810) do
 
   create_table "master_ids", force: :cascade do |t|
     t.string "snowflake_id"
+    t.jsonb "snowflake_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
