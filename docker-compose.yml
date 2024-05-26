@@ -8,8 +8,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: snowflake
-      POSTGRES_PASSWORD: postgres!supperF@k3
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: snowflake_id_development
     ports:
       - "5432:5432"
@@ -36,8 +36,8 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_HOST: db
-      DATABASE_USERNAME: snowflake
-      DATABASE_PASSWORD: postgres!supperF@k3
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
       WORKER_ID: "{{.Task.Slot}}"
       DATACENTER_NAME: "{{ .Node.Hostname }}"
     deploy:
