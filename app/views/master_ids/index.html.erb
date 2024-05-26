@@ -1,46 +1,55 @@
 <div class="h-screen bg-blue-400 flex flex-col items-center justify-center">
   <img src="https://upcloud.com/media/Docker-Swarm-Orchestration-2.png" alt="Docker Logo" class="w-50 mx-auto mb-4 rounded-full" />
   <h1 class="text-white text-3xl font-bold">
-    <%= ENV['DATACENTER_NAME'] %>
+    Response from: <%= ENV['DATACENTER_NAME'] %>
   </h1>
 
   <h3>
-    worker_counts
+    Workers
   </h3>
-  <%= @worker_counts %>
-
-  <h3>
-    worker_counts
-  </h3>
-  <%= @datacenter_counts %>
-
-</div>
-
-<p style="color: green"><%= notice %></p>
-
-<h1>Masters</h1>
-
-<div id="master_ids">
-  <table class="table-fixed">
+  <table>
     <thead>
       <tr>
-        <th>snowflake_id</th>
-        <th>snowflake_data</th>
+        <th>ID</th>
+        <th>Count</th>
       </tr>
     </thead>
     <tbody>
-      <% @master_ids.each do |master_id| %>
+      <% @worker_counts.each do |worker_id, count| %>
         <tr>
           <td>
-            <%= master_id.snowflake_id %>
+            <%= worker_id %>
           </td>
           <td>
-            <%= master_id.snowflake_data %>
+            <%= count %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>
+    Data Center
+  </h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datacenter_counts.each do |datacenter_id, count| %>
+        <tr>
+          <td>
+            <%= datacenter_id %>
+          </td>
+          <td>
+            <%= count %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-
 <%= link_to "New master", new_master_id_path, class: "inline-flex items-center px-4 py-2 text-xs font-semibold leading-tight text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
