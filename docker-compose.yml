@@ -1,8 +1,59 @@
 # docker-compose.yml
 
-version: '3.8'
+version: '3.7'
+volumes:
+  database:
+
+networks:
+  app:
+    driver: bridge
+  logging:
+    driver: bridge
 
 services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - logging
+    deploy:
+      placement:
+        constraints:
+          - node.labels.logging == true
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.12.1
+    ports:
+      - "5000:5000"
+      - "127.0.0.1:12201:12201/udp"
+    networks:
+      - logging
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on:
+      - elasticsearch
+    deploy:
+      placement:
+        constraints:
+          - node.labels.logging == true
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.1
+    ports:
+      - "5601:5601"
+    networks:
+      - logging
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    deploy:
+      placement:
+        constraints:
+          - node.labels.logging == true
+
   db:
     image: postgres:14
     volumes:
@@ -27,6 +78,8 @@ services:
         reservations:
           cpus: '0.1'
           memory: 128M
+    networks:
+      - app
 
   base: &base
     build: .
@@ -42,13 +95,11 @@ services:
       DATACENTER_NAME: "{{ .Node.Hostname }}"
     deploy:
       replicas: 0
+    networks:
+      - app
   web:
     <<: *base
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
-    # command: bash -c "rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"
-
-    # volumes:
-    #   - .:/app
     ports:
       - "3000:3000"
     deploy:
@@ -65,8 +116,10 @@ services:
         reservations:
           cpus: '0.1'
           memory: 20M
-volumes:
-  database:
-
-networks:
-  monitoring:
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
+    networks:
+      - logging
+      - app
