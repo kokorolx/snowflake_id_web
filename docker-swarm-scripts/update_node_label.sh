@@ -6,17 +6,21 @@ if [[ $(id -u) -ne 0 ]]; then
   exit 1
 fi
 
-# Get a list of all node IDs
-node_ids=$(docker node ls --quiet)
-
+# DATA_CENTER = ['sudox-01', 'azure-01', 'aws-01']
 # Specify the label name and base value
 label_name="DATACENTER_ID"
 
-# Update the label for each node with a dynamic value
-counter=1
-for node_id in $node_ids; do
-  label_value="$counter"
-  docker node update $node_id --label-add "$label_name=$label_value"
-  echo "Updated label $label_name to $label_value for node $node_id"
-  counter=$((counter + 1))
-done
+docker node update sudox-01 --label-add "$label_name=0";
+docker node update azure-01 --label-add "$label_name=1";
+docker node update aws-01 --label-add "$label_name=2";
+
+# ELK stack
+docker node update aws-01 --label-add logging_e=true;
+docker node update sudox-01 --label-add logging_l=true;
+docker node update azure-01 --label-add logging_k=true;
+
+# Database
+docker node update azure-01 --label-add database=true;
+
+# web server
+# docker node update azure-01 --label-add web=true;
