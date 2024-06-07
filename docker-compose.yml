@@ -30,7 +30,7 @@ services:
     image: docker.elastic.co/logstash/logstash:7.12.1
     ports:
       - "5000:5000"
-      - "0.0.0.0:12201:12201/udp"
+      - "127.0.0.1:12201:12201/udp"
 
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -130,6 +130,6 @@ services:
     logging:
       driver: "gelf"
       options:
-        gelf-address: "udp://0.0.0.0:12201"
+        gelf-address: "udp://127.0.0.1:12201"
 
 
