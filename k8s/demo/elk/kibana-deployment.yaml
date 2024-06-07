@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o k8s
+    kompose.version: 1.33.0 (HEAD)
+  labels:
+    io.kompose.service: kibana
+  name: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kibana
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o k8s
+        kompose.version: 1.33.0 (HEAD)
+      labels:
+        io.kompose.network/snowflake-id-default: "true"
+        io.kompose.service: kibana
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: logging_k
+                    operator: In
+                    values:
+                      - "true"
+      containers:
+        - env:
+            - name: ELASTICSEARCH_HOSTS
+              value: http://elasticsearch:9200
+          image: docker.elastic.co/kibana/kibana:7.12.1
+          name: kibana
+          ports:
+            - containerPort: 5601
+              hostPort: 5601
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: "268435456"
+            requests:
+              cpu: 100m
+              memory: "20971520"
+      restartPolicy: Always

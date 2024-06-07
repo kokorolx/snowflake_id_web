@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  logstash.conf: |
+    input {
+      gelf {
+        port => 12201
+      }
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch:9200"]
+      }
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: logstash
+  name: logstash-cm0
