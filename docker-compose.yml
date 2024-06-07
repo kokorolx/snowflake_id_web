@@ -4,6 +4,9 @@ version: '3.7'
 volumes:
   database:
 
+networks:
+  my-overlay-network:
+    external: true
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
@@ -13,6 +16,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+      - my-overlay-network
 
     deploy:
       placement:
@@ -31,6 +36,8 @@ services:
     ports:
       - "5000:5000"
       - "127.0.0.1:12201:12201/udp"
+    networks:
+      - my-overlay-network
 
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -53,6 +60,8 @@ services:
     image: docker.elastic.co/kibana/kibana:7.12.1
     ports:
       - "5601:5601"
+    networks:
+      - my-overlay-network
 
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
@@ -93,7 +102,8 @@ services:
         reservations:
           cpus: '0.1'
           memory: 128M
-
+    networks:
+      - my-overlay-network
   base: &base
     build: .
     image: kokorolee/snowflake_id
@@ -131,5 +141,5 @@ services:
       driver: "gelf"
       options:
         gelf-address: "udp://127.0.0.1:12201"
-
-
+    networks:
+      - my-overlay-network
