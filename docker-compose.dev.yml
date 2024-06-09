@@ -43,8 +43,7 @@ services:
       replicas: 0
   web:
     <<: *base
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
-    # command: bash -c "rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"
+    command: bash -c "gem install foreman && rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"
 
     volumes:
       - .:/app
@@ -67,6 +66,3 @@ services:
 
 volumes:
   postgres_data:
-
-networks:
-  monitoring:

@@ -4,80 +4,7 @@ version: '3.7'
 volumes:
   database:
 
-networks:
-  my-overlay-network:
-    external: true
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
-    environment:
-      - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms256m -Xmx256m
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - my-overlay-network
-
-    deploy:
-      placement:
-        constraints:
-          - node.labels.logging_e == true
-      replicas: 1
-      resources:
-        limits:
-          memory: 512m
-          cpus: '0.5'
-        reservations:
-          memory: 20m
-          cpus: '0.1'
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.12.1
-    ports:
-      - "5000:5000"
-      - "127.0.0.1:12201:12201/udp"
-    networks:
-      - my-overlay-network
-
-    volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    depends_on:
-      - elasticsearch
-    deploy:
-      placement:
-        constraints:
-          - node.labels.logging_l == true
-      replicas: 1
-      resources:
-        limits:
-          memory: 256m
-          cpus: '0.5'
-        reservations:
-          memory: 20m
-          cpus: '0.1'
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.12.1
-    ports:
-      - "5601:5601"
-    networks:
-      - my-overlay-network
-
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-    deploy:
-      placement:
-        constraints:
-          - node.labels.logging_k == true
-      replicas: 1
-      resources:
-        limits:
-          memory: 256m
-          cpus: '0.5'
-        reservations:
-          memory: 20m
-          cpus: '0.1'
-
   db:
     image: postgres:14
     volumes:
@@ -101,7 +28,7 @@ services:
           memory: 256M
         reservations:
           cpus: '0.1'
-          memory: 128M
+          memory: 20M
     networks:
       - my-overlay-network
   base: &base
@@ -132,14 +59,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: '0.1'
-          memory: 90M
+          cpus: '0.3'
+          memory: 128M
         reservations:
           cpus: '0.1'
           memory: 20M
-    logging:
-      driver: "gelf"
-      options:
-        gelf-address: "udp://127.0.0.1:12201"
-    networks:
-      - my-overlay-network
